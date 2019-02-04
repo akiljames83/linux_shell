@@ -22,15 +22,18 @@ read -p "Enter initial password: " PASSWORD
 # Creat new user
 useradd -c "${COMMENT}" -m ${LOGIN}
 
+# Check if the user was created successfuly
 if [[ "$?" != 0 ]]
 then
   echo "The account was not able to be created."
   exit 1;
 fi
 
+# Set the user password
 echo ${PASSWORD} | passwd --stdin ${LOGIN}
 passwd -e ${LOGIN}
 
+# Check to see if setting the password failed
 if [[ "$?" != 0 ]]
 then
   echo "The account was not able to be created."
@@ -38,7 +41,10 @@ then
 fi
 
 # Display the user information
+echo
 echo "Username is : ${LOGIN}"
 echo "Password is: ${PASSWORD}"
-echo "Host is : ${LOGIN}"
+echo "Host is : ${HOSTNAME}"
+echo
+
 
