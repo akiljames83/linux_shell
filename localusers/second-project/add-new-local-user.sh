@@ -26,7 +26,7 @@ useradd -c "${COMMENT}" -m ${USER_NAME}
 
 if [[ "$?" -ne 0 ]]
 then
-  echo "Account was not able to be created"
+  echo "Account was not able to be created."
   exit 1
 fi
 
@@ -40,7 +40,7 @@ echo "${PASSWORD}${R_CHAR}" | passwd --stdin ${USER_NAME}
 
 if [[ "$?" -ne 0 ]]
 then
-  echo "Password was not able to be added"
+  echo "Password was not able to be added."
   exit 1
 fi
 
@@ -48,8 +48,9 @@ fi
 passwd -e ${USER_NAME}
 
 # Display the user information
+echo
 echo "Username: ${USER_NAME}"
 echo "Comments: ${COMMENT}"
 echo "Password: ${PASSWORD}${R_CHAR}"
 echo "Host: ${HOSTNAME}"
-
+exit 0
