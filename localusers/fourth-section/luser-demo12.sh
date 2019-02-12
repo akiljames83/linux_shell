@@ -5,6 +5,16 @@
 # They use can set password length w -l and add a special character -s
 # Verbose mode can be enabled with -v
 
+# Define a usage function for user
+function usage {
+  echo "Usage ${0}: [-vs] [-l LENGTH]" >&2
+  echo 'Generate a random password.'
+  echo '  -l LENGTH Specify password length.'
+  echo '  -s        Add special character to password.'
+  echo '  -v        Enable the verbose mode.'
+  exit 1;
+}
+
 # Set a default password Length
 LENGTH=48
 
@@ -24,7 +34,7 @@ do
       USE_SPECIAL_CHAR='true'
       ;;
     ?) # This is for a single character not specified
-      echo 'Invalid options.' >&2
+      usage
       exit 1;
       ;;
   esac # Backwards case ends the case statement
