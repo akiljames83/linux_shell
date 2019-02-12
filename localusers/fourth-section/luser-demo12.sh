@@ -18,7 +18,7 @@ function usage {
 
 # Implement a function to display things if verbosity is set
 function log {
-  if [[ "$VERBOSE" -eq 'true' ]]
+  if [[ "$VERBOSE" = 'true' ]]
   then
     echo "$*"
   fi
@@ -26,7 +26,7 @@ function log {
 
 # Set a default password Length
 LENGTH=48
-
+VERBOSE='false'
 # The colon after an argument specifies that it must be followed by a value
 while getopts vl:s OPTION
 do
