@@ -48,9 +48,11 @@ function delete {
     echo "Cannot modift admin accounts." >&2
     return 1;
   fi
-  
+  userdel $USER
+  return $?
 }
 
+# REMOVE
 function remove {
   local USER="${1}"
   if [[ `check_permission $USER` -eq 1 ]]
@@ -58,8 +60,11 @@ function remove {
     echo "Cannot modift admin accounts." >&2
     return 1;
   fi
+  rmdir /home/$USER
+  return $?
 }
 
+# ARCHIVE
 function archive {
   local USER="${1}"
   if [[ `check_permission $USER` -eq 1 ]]
@@ -67,6 +72,17 @@ function archive {
     echo "Cannot modift admin accounts." >&2
     return 1;
   fi
+  
+  # Check if the /archive directory exists
+  if [[ ! -d "/archive" ]]
+  then 
+    mkdir /archive
+  fi
+
+  # Archive the user file
+  tar -cxf "/archive/${USER}_archive.tar" /home/$USER
+  return $?
+ 
 }
 # 2. Initalize action variable.
 #    1 -> Disable
@@ -105,5 +121,25 @@ then
   exit $?
 fi
 
-
+for CUSER in "$@"
+do
+  case $ACTION
+    1)
+      echo "Disabling the user ${CUSER}."
+      disable $CUSER
+      ;;
+    2)
+      echo "Deleting the user ${CUSER}."
+      delete $CUSER
+      ;;
+    3)
+      echo "Removing home directory of ${CUSER}."
+      remove $CUSER
+      ;;
+    4)
+      echo "Archive home directory of ${CUSER}."
+      archive $CUSER
+      ;;
+  esac
+done
 
