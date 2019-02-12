@@ -6,6 +6,7 @@
 # Verbose mode can be enabled with -v
 
 # Define a usage function for user
+# Model usage page as that specified in man pages.
 function usage {
   echo "Usage ${0}: [-vs] [-l LENGTH]" >&2
   echo 'Generate a random password.'
@@ -13,6 +14,14 @@ function usage {
   echo '  -s        Add special character to password.'
   echo '  -v        Enable the verbose mode.'
   exit 1;
+}
+
+# Implement a function to display things if verbosity is set
+function log {
+  if [[ "$VERBOSE" -eq 'true' ]]
+  then
+    echo "$*"
+  fi
 }
 
 # Set a default password Length
@@ -39,3 +48,27 @@ do
       ;;
   esac # Backwards case ends the case statement
 done
+
+# Generate a password
+log 'Generating a password.'
+PASSWORD=`date +%s%N${RANDOM} | sha256sum | head -c $LENGTH`
+
+# Add random character if specified
+if [[ "$USE_SPECIAL_CHAR" = 'true' ]]
+then
+  log 'Adding random character.'
+  S='!@#$%^&*()_+-='
+  R_CHAR=`echo "$S" | fold -w1 | shuf | head -c1`
+  PASSWORD="${PASSWORD}${R_CHAR}"
+fi
+
+log 'Password completed.'
+log 'Here is the password:'
+
+# Display the password
+echo $PASSWORD
+
+log ''
+log 'Exiting program.'
+exit 0
+
