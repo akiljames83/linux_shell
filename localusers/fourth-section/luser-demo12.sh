@@ -49,6 +49,14 @@ do
   esac # Backwards case ends the case statement
 done
 
+# Check to see if there are extra arguments
+shift "$(( OPTIND -1 ))"
+if [[ "$#" -ne 0 ]]
+then
+  usage
+  exit $?;
+fi
+
 # Generate a password
 log 'Generating a password.'
 PASSWORD=`date +%s%N${RANDOM} | sha256sum | head -c $LENGTH`
