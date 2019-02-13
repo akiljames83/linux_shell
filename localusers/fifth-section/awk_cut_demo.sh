@@ -1,15 +1,13 @@
 #!/bin/bash
 
-# Getting familiar with Cut and Awk Command
-echo -e 'one\ttwo\tthree\tfour' | cut -f 1,2,4
+# This script will be using regular expresions, grep, awk and cut
+# to process the active ports on the computer using the netstat 
+# command.
 
-# Getting familar with awk
-# AWK is used to parse and print strings
-awk -F ':' '{print "Col: " $1 " " $3 }' /etc/passwd
+netstat -nutl | grep -E "^Active|^Prot"
 
-# the -F option is for the filed to split on
-# inside the praces, you can set the value you want to print
-# awk is mostly used for data that isnt clean seperated with 
-# varying length white spaces or for delimeters that are larger
-# than one character
-# $NF in awk is for last character instance in field, instead of using $1 etc.
+# -E for extended regular expressions with grep
+# -v to negate the pattern that is searched for; i.e. NOT this pattern
+# | the or operator for a regular expression statement
+# ^ The anchor for the front of a line to check if pattern exists
+
