@@ -63,9 +63,9 @@ do
   # 5. If dry run is enabled, dont run command, otherwise do.
   if [[ "$DRY_RUN" != 'true' ]]
   then
-    $SUDO $FRONT $COMMAND
+    $FRONT $SUDO $COMMAND
   else
-    echo "DR: $SUDO $FRONT $COMMAND"
+    echo "DR: $FRONT $SUDO $COMMAND"
   fi
  
 done
