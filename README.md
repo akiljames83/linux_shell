@@ -6,3 +6,4 @@
 
 ## Multinet Project:
 - In the multinet directory, I used vagrant to instantiate a set of servers in an interconnected network to mimic common netowrking and sysadmin issues.
+- The run-everywhere script allows the user to run commands on remote servers!
